@@ -19,28 +19,28 @@ namespace Assets.SvgToPngConverter.Editor
                 string svgPath = Application.dataPath.Replace("Assets", importedAsset),
                     pngPath = svgPath.Replace(".svg", ".png"),
                     arguments = string.Format("\"{0}\" --export-png=\"{1}\"", svgPath, pngPath);
-                ProcessStartInfo processStartInfo =
-                    new ProcessStartInfo("inkscape", arguments);
-                Process process = StartProcess(processStartInfo);
-                if (process == null) continue;
-                process.WaitForExit();
-                process.Close();
+                ProcessStartInfo startInfo = new ProcessStartInfo("inkscape", arguments);
+                StartProcessAndWaitForExit(startInfo);
             }
             AssetDatabase.Refresh();
         }
 
-        private static Process StartProcess(ProcessStartInfo processStartInfo)
+        private static void StartProcessAndWaitForExit(ProcessStartInfo startInfo)
         {
-            try
+            using (Process process = new Process())
             {
-                return Process.Start(processStartInfo);
-            }
-            catch (Exception)
-            {
-                const string mes = "Please install Inkscape and add it to your windows path: " +
-                                   "https://inkscape.org";
-                UnityEngine.Debug.LogWarning(mes);
-                return null;
+                process.StartInfo = startInfo;
+                try
+                {
+                    process.Start();
+                }
+                catch (Exception)
+                {
+                    const string mes = "Please install Inkscape and add it to your windows " +
+                                       "path: https://inkscape.org";
+                    UnityEngine.Debug.LogWarning(mes);
+                }
+                process.WaitForExit();
             }
         }
     }
