@@ -33,3 +33,12 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+/.collabignore
+/.idea/.idea.SvgToPngConverter
+/Assets/Plugins/Editor/JetBrains
+/Assets/Plugins/Editor/JetBrains.meta
+/Assets/Plugins/Editor.meta
+/Assets/Plugins.meta
+/Assets/Resources/SvgImporterSettings.asset
+/Assets/Resources/SvgImporterSettings.asset.meta
+/Assets/Resources.meta
