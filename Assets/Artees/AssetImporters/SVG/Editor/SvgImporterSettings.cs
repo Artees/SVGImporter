@@ -23,5 +23,7 @@ namespace Artees.AssetImporters.SVG.Editor
 #else
             "inkscape";
 #endif
+        [SerializeField] public SvgPixelDataStorage DefaultPixelDataStorage =
+            SvgPixelDataStorage.Metadata;
     }
 }

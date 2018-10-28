@@ -17,7 +17,7 @@ namespace Artees.AssetImporters.SVG.Editor
         private void Awake()
         {
             _settings = SvgImporterSettings.Load();
-            minSize = new Vector2(300f, 100f);
+            minSize = new Vector2(300f, 150f);
         }
 
         private void OnGUI()
@@ -29,7 +29,7 @@ namespace Artees.AssetImporters.SVG.Editor
             }
 
             GUILayout.FlexibleSpace();
-            GUILayout.Label("Inkscape executable:");
+            GUILayout.Label("Inkscape executable:", EditorStyles.boldLabel);
             GUILayout.BeginHorizontal();
             var minWidth = GUILayout.MinWidth(10f);
             _settings.InkscapeExecutable =
@@ -42,6 +42,13 @@ namespace Artees.AssetImporters.SVG.Editor
             }
 
             GUILayout.EndHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label("Default pixel data storage:", EditorStyles.boldLabel);
+            var metadata = _settings.DefaultPixelDataStorage == SvgPixelDataStorage.Metadata;
+            metadata = EditorGUILayout.Toggle("Metadata", metadata, EditorStyles.radioButton);
+            metadata = !EditorGUILayout.Toggle("Png", !metadata, EditorStyles.radioButton);
+            _settings.DefaultPixelDataStorage =
+                metadata ? SvgPixelDataStorage.Metadata : SvgPixelDataStorage.Png;
             GUILayout.FlexibleSpace();
         }
 

@@ -2,31 +2,50 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using UnityEditor;
 using UnityEditor.Experimental.AssetImporters;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace Artees.AssetImporters.SVG.Editor
 {
-    [ScriptedImporter(1, "svg")]
+    [Serializable, ScriptedImporter(2, "svg")]
     // ReSharper disable once UnusedMember.Global
     internal class SvgImporter : ScriptedImporter
     {
+        [SerializeField, HideInInspector] public SvgPixelDataStorage PixelDataStorage;
+
         [SerializeField, HideInInspector] private string _data;
 
         public override void OnImportAsset(AssetImportContext ctx)
         {
             var settings = SvgImporterSettings.Load();
             var texture = new Texture2D(4, 4) {alphaIsTransparency = true};
-            var svgPath = Application.dataPath.Replace("Assets", ctx.assetPath);
-            var pngPath = svgPath.Replace(".svg", ".png");
+            const string svgExt = ".svg";
+            var relativeSvgPath = ctx.assetPath;
+            var relativePngPath = relativeSvgPath.Replace(svgExt, ".png");
+            const string assetsDirectory = "Assets";
+            var dataPath = Application.dataPath;
+            var svgPath = dataPath.Replace(assetsDirectory, relativeSvgPath);
+            var pngPath = dataPath.Replace(assetsDirectory, relativePngPath);
             var arguments = string.Format("\"{0}\" --export-png=\"{1}\"", svgPath, pngPath);
             var startInfo = new ProcessStartInfo(settings.InkscapeExecutable, arguments);
             StartProcessAndWaitForExit(startInfo);
             if (File.Exists(pngPath))
             {
                 var data = File.ReadAllBytes(pngPath);
-                File.Delete(pngPath);
+                if (PixelDataStorage == SvgPixelDataStorage.Png ||
+                    PixelDataStorage == SvgPixelDataStorage.Default &&
+                    settings.DefaultPixelDataStorage == SvgPixelDataStorage.Png)
+                {
+                    AssetDatabase.ImportAsset(relativePngPath);
+                }
+                else
+                {
+                    File.Delete(pngPath);
+                    AssetDatabase.DeleteAsset(relativePngPath);
+                }
+
                 texture.LoadImage(data);
                 _data = Convert.ToBase64String(data, Base64FormattingOptions.InsertLineBreaks);
             }
@@ -40,7 +59,7 @@ namespace Artees.AssetImporters.SVG.Editor
             var rect = new Rect(0f, 0f, texture.width, texture.height);
             var pivot = new Vector2(0.5f, 0.5f);
             var sprite = Sprite.Create(texture, rect, pivot);
-            sprite.name = ctx.assetPath.Split('/').Last().Replace(".svg", string.Empty);
+            sprite.name = relativeSvgPath.Split('/').Last().Replace(svgExt, string.Empty);
             ctx.AddObjectToAsset("texture", texture, texture);
             ctx.AddObjectToAsset("sprite", sprite);
             ctx.SetMainObject(sprite);
