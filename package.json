@@ -1,0 +1,18 @@
+
+{
+    "name" : "games.artees.svg-importer",
+    "version" : "1.0.0",
+    "displayName" : "SVG Importer",
+    "description" : "SVG Importer for Unity",
+    "unity"       : "2019.1",
+    "unityRelease" : "",
+    "dependencies" : {
+    },
+    "keywords"     : [
+    ],
+    "author"       : {
+        "name" : "Artees",
+        "email" : "yo@artees.games",
+        "url"   : "https://github.com/Artees/SVGImporter"
+    }
+}

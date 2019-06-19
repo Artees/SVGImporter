@@ -1,10 +1,11 @@
 ﻿using UnityEditor;
+using UnityEditor.Experimental.AssetImporters;
 using UnityEngine;
 
 namespace Artees.SVGImporter.Editor
 {
     [CustomEditor(typeof(SvgImporter))]
-    public class SvgImporterEditor : UnityEditor.Editor
+    public class SvgImporterEditor : ScriptedImporterEditor
     {
         public override void OnInspectorGUI()
         {
