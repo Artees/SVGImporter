@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Artees.AssetImporters.SVG.Editor
+namespace Artees.SVGImporter.Editor
 {
     [CustomEditor(typeof(SvgImporter))]
     public class SvgImporterEditor : UnityEditor.Editor

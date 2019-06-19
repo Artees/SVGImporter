@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Artees.AssetImporters.SVG.Editor
+namespace Artees.SVGImporter.Editor
 {
     internal class SvgImporterSettings : ScriptableObject
     {

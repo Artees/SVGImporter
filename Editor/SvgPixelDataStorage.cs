@@ -1,4 +1,4 @@
-﻿namespace Artees.AssetImporters.SVG.Editor
+﻿namespace Artees.SVGImporter.Editor
 {
     internal enum SvgPixelDataStorage
     {

@@ -7,7 +7,7 @@ using UnityEditor.Experimental.AssetImporters;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace Artees.AssetImporters.SVG.Editor
+namespace Artees.SVGImporter.Editor
 {
     [Serializable, ScriptedImporter(2, "svg")]
     // ReSharper disable once UnusedMember.Global
