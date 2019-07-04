@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Artees.SVGImporter.Editor
 {
@@ -16,14 +17,28 @@ namespace Artees.SVGImporter.Editor
             AssetDatabase.CreateAsset(settings, path);
             return settings;
         }
-        
-        [SerializeField] public string InkscapeExecutable =
+
+        [FormerlySerializedAs("InkscapeExecutable"), SerializeField]
+        private string inkscapeExecutable =
 #if UNITY_EDITOR_OSX
             "/Applications/Inkscape.app/Contents/Resources/bin/inkscape";
 #else
             "inkscape";
 #endif
-        [SerializeField] public SvgPixelDataStorage DefaultPixelDataStorage =
-            SvgPixelDataStorage.Metadata;
+
+        [FormerlySerializedAs("DefaultPixelDataStorage"), SerializeField]
+        private SvgPixelDataStorage defaultPixelDataStorage = SvgPixelDataStorage.Metadata;
+
+        public string InkscapeExecutable
+        {
+            get { return inkscapeExecutable; }
+            set { inkscapeExecutable = value; }
+        }
+
+        public SvgPixelDataStorage DefaultPixelDataStorage
+        {
+            get { return defaultPixelDataStorage; }
+            set { defaultPixelDataStorage = value; }
+        }
     }
 }

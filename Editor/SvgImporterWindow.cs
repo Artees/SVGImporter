@@ -18,6 +18,7 @@ namespace Artees.SVGImporter.Editor
         {
             _settings = SvgImporterSettings.Load();
             minSize = new Vector2(300f, 150f);
+            position = new Rect(position.position, minSize);
         }
 
         private void OnGUI()
@@ -43,13 +44,21 @@ namespace Artees.SVGImporter.Editor
 
             GUILayout.EndHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Label("Default pixel data storage:", EditorStyles.boldLabel);
-            var metadata = _settings.DefaultPixelDataStorage == SvgPixelDataStorage.Metadata;
-            metadata = EditorGUILayout.Toggle("Metadata", metadata, EditorStyles.radioButton);
-            metadata = !EditorGUILayout.Toggle("Png", !metadata, EditorStyles.radioButton);
+            var metadata = CreateToggleGroup("Default pixel data storage:",
+                _settings.DefaultPixelDataStorage == SvgPixelDataStorage.Metadata,
+                "Metadata",
+                "Png");
             _settings.DefaultPixelDataStorage =
                 metadata ? SvgPixelDataStorage.Metadata : SvgPixelDataStorage.Png;
             GUILayout.FlexibleSpace();
+        }
+
+        private static bool CreateToggleGroup(string header, bool value, string labelTrue, string labelFalse)
+        {
+            GUILayout.Label(header, EditorStyles.boldLabel);
+            var result = EditorGUILayout.Toggle(labelTrue, value, EditorStyles.radioButton);
+            result = !EditorGUILayout.Toggle(labelFalse, !result, EditorStyles.radioButton);
+            return result;
         }
 
         private void OnDestroy()
