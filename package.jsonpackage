@@ -1,7 +1,7 @@
 
 {
     "name" : "games.artees.svg-importer",
-    "version" : "1.2.0",
+    "version" : "1.2.1",
     "displayName" : "SVG Importer",
     "description" : "SVG Importer for Unity",
     "unity"       : "2019.1",

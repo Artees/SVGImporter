@@ -14,8 +14,10 @@ namespace Artees.SVGImporter.Editor
     // ReSharper disable once UnusedMember.Global
     internal class SvgImporter : ScriptedImporter
     {
+#pragma warning disable 0649
         [FormerlySerializedAs("PixelDataStorage"), SerializeField]
         private SvgPixelDataStorage pixelDataStorage;
+#pragma warning restore 0649
 
         [FormerlySerializedAs("_data"), SerializeField, HideInInspector]
         private string data;
