@@ -24,7 +24,7 @@ namespace Artees.SVGImporter.Editor
         public override void OnImportAsset(AssetImportContext ctx)
         {
             var relativeSvgPath = ctx.assetPath;
-            if (string.IsNullOrEmpty(relativeSvgPath)) return;
+            if (string.IsNullOrEmpty(relativeSvgPath) || relativeSvgPath.StartsWith("Packages/")) return;
             var settings = SvgImporterSettings.Load();
             var texture = new Texture2D(4, 4) {alphaIsTransparency = true};
             var svgFolder = Path.GetDirectoryName(relativeSvgPath)?.Replace("\\", "/");
