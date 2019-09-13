@@ -28,7 +28,7 @@ namespace Artees.SVGImporter.Editor
             if (string.IsNullOrEmpty(relativeSvgPath)) return;
             var settings = SvgImporterSettings.Load();
             var texture = new Texture2D(4, 4) {alphaIsTransparency = true};
-            var svgFolder = Path.GetDirectoryName(relativeSvgPath);
+            var svgFolder = Path.GetDirectoryName(relativeSvgPath)?.Replace("\\", "/");
             const string pngFolderName = "Rasterized";
             var pngFolder = string.Format("{0}/{1}", svgFolder, pngFolderName);
             if (!AssetDatabase.IsValidFolder(pngFolder))
@@ -84,7 +84,6 @@ namespace Artees.SVGImporter.Editor
             }
             else
             {
-                File.Delete(pngPath);
                 AssetDatabase.DeleteAsset(relativePngPath);
                 var isPngFolderEmpty = !AssetDatabase.GetAllAssetPaths()
                     .Any(s => s.StartsWith(pngFolder) && s != pngFolder);
