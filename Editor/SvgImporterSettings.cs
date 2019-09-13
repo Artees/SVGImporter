@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -29,16 +30,18 @@ namespace Artees.SVGImporter.Editor
         [FormerlySerializedAs("DefaultPixelDataStorage"), SerializeField]
         private SvgPixelDataStorage defaultPixelDataStorage = SvgPixelDataStorage.Metadata;
 
+        [SuppressMessage("ReSharper", "ConvertToAutoProperty", Justification = "Serialized")]
         public string InkscapeExecutable
         {
-            get { return inkscapeExecutable; }
-            set { inkscapeExecutable = value; }
+            get => inkscapeExecutable;
+            set => inkscapeExecutable = value;
         }
 
+        [SuppressMessage("ReSharper", "ConvertToAutoProperty", Justification = "Serialized")]
         public SvgPixelDataStorage DefaultPixelDataStorage
         {
-            get { return defaultPixelDataStorage; }
-            set { defaultPixelDataStorage = value; }
+            get => defaultPixelDataStorage;
+            set => defaultPixelDataStorage = value;
         }
     }
 }

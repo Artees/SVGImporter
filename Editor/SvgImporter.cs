@@ -11,7 +11,6 @@ using Debug = UnityEngine.Debug;
 namespace Artees.SVGImporter.Editor
 {
     [Serializable, ScriptedImporter(3, "svg")]
-    // ReSharper disable once UnusedMember.Global
     internal class SvgImporter : ScriptedImporter
     {
 #pragma warning disable 0649
@@ -30,7 +29,7 @@ namespace Artees.SVGImporter.Editor
             var texture = new Texture2D(4, 4) {alphaIsTransparency = true};
             var svgFolder = Path.GetDirectoryName(relativeSvgPath)?.Replace("\\", "/");
             const string pngFolderName = "Rasterized";
-            var pngFolder = string.Format("{0}/{1}", svgFolder, pngFolderName);
+            var pngFolder = $"{svgFolder}/{pngFolderName}";
             if (!AssetDatabase.IsValidFolder(pngFolder))
             {
                 AssetDatabase.CreateFolder(svgFolder, pngFolderName);
@@ -39,8 +38,7 @@ namespace Artees.SVGImporter.Editor
                 return;
             }
 
-            var relativePngPath = string.Format("{0}/{1}.png", pngFolder,
-                Path.GetFileNameWithoutExtension(relativeSvgPath));
+            var relativePngPath = $"{pngFolder}/{Path.GetFileNameWithoutExtension(relativeSvgPath)}.png";
             const string assetsDirectory = "Assets";
             var dataPath = Application.dataPath;
             var svgPath = dataPath.Replace(assetsDirectory, relativeSvgPath);
@@ -57,7 +55,7 @@ namespace Artees.SVGImporter.Editor
             {
                 var bytes = Convert.FromBase64String(data);
                 texture.LoadImage(bytes);
-                var message = string.Format("File \"{0}\" was not created.", pngPath);
+                var message = $"File \"{pngPath}\" was not created.";
                 Debug.LogError(message);
             }
 
@@ -102,7 +100,7 @@ namespace Artees.SVGImporter.Editor
             var startInfo = new ProcessStartInfo
             {
                 FileName = inkscape,
-                Arguments = string.Format("\"{0}\" --export-png=\"{1}\"", svgPath, pngPath),
+                Arguments = $"\"{svgPath}\" --export-png=\"{pngPath}\"",
                 UseShellExecute = false,
                 RedirectStandardError = true,
             };
