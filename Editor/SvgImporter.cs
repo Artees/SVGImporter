@@ -102,7 +102,7 @@ namespace Artees.SVGImporter.Editor
             var startInfo = new ProcessStartInfo
             {
                 FileName = inkscape,
-                Arguments = $"\"{svgPath}\" --export-png=\"{pngPath}\"",
+                Arguments = $"\"{svgPath}\" -o \"{pngPath}\"",
                 UseShellExecute = false,
                 RedirectStandardError = true,
             };
