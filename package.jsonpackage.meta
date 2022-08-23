@@ -9,10 +9,10 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 305d72b64a2242c0b6ff1d70a6bc89f4, type: 3}
   name: games.artees.svg-importer
-  version: 2.0.0
+  version: 2.0.1
   displayName: SVG Importer
   description: SVG Importer for Unity
-  unity: 2019.2
+  unity: 2021.3
   unityRelease: 
   dependencies:
     keyValuePairs: []
