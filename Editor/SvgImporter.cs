@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Experimental.AssetImporters;
+using UnityEditor.AssetImporters;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
@@ -35,7 +35,6 @@ namespace Artees.SVGImporter.Editor
                 AssetDatabase.CreateFolder(svgFolder, pngFolderName);
                 EditorUtility.SetDirty(this);
                 AssetDatabase.ImportAsset(relativeSvgPath);
-                return;
             }
 
             var relativePngPath = $"{pngFolder}/{Path.GetFileNameWithoutExtension(relativeSvgPath)}.png";
@@ -44,7 +43,10 @@ namespace Artees.SVGImporter.Editor
             var svgPath = dataPath.Replace(assetsDirectory, relativeSvgPath);
             var pngPath = dataPath.Replace(assetsDirectory, relativePngPath);
             var obsoletePngPath = Path.ChangeExtension(relativeSvgPath, "png");
-            AssetDatabase.MoveAsset(obsoletePngPath, relativePngPath);
+            if (File.Exists(obsoletePngPath))
+            {
+                AssetDatabase.MoveAsset(obsoletePngPath, relativePngPath);
+            }
             ExportPng(settings.InkscapeExecutable, svgPath, pngPath);
             if (File.Exists(pngPath))
             {
